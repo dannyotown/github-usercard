@@ -2,6 +2,24 @@
            (replacing the palceholder with your Github name):
            https://api.github.com/users/<your name>
 */
+let cardquery = document.querySelector('.cards')
+function getRequest(username){
+axios.get(`https://api.github.com/users/${username}`)
+  .then((response)=>{
+    var person = {
+      pic:response.data.avatar_url,
+      name: response.data.name,
+      login:response.data.login,
+      location:response.data.location,
+      url:response.data.url,
+      followers: response.data.followers,
+      following: response.data.following,
+      bio:response.data.bio
+    }
+    cardquery.appendChild(cardCreation(person));
+  })
+}
+getRequest('dannyotown');
 
 /* Step 2: Inspect and study the data coming back, this is YOUR 
    github info! You will need to understand the structure of this 
@@ -24,7 +42,10 @@
           user, and adding that card to the DOM.
 */
 
-const followersArray = [];
+const followersArray = ['tetondan','dustinmyers','justsml','luishrd','bigknell'];
+followersArray.forEach((ele)=>{
+  getRequest(ele);
+})
 
 /* Step 3: Create a function that accepts a single object as its only argument,
           Using DOM methods and properties, create a component that will return the following DOM element:
@@ -45,6 +66,53 @@ const followersArray = [];
 </div>
 
 */
+function cardCreation(person){
+let card = document.createElement('div')
+card.classList.add('card')
+
+let img = document.createElement('img')
+img.src = person.pic;
+card.appendChild(img)
+
+let cardInfo = document.createElement('div')
+cardInfo.classList.add('card-info')
+card.appendChild(cardInfo)
+
+let h3  = document.createElement('h3')
+h3.classList.add('name')
+h3.textContent = person.name
+cardInfo.appendChild(h3)
+
+let para = document.createElement('p')
+para.classList.add('username')
+para.textContent = person.login
+cardInfo.appendChild(para)
+
+let location = document.createElement('p')
+location.textContent = `Location: ${person.location}`
+cardInfo.appendChild(location)
+
+let prof = document.createElement('p')
+prof.textContent = 'Profile:'
+let alink = document.createElement('a')
+alink.textContent = person.url;
+prof.appendChild(alink)
+cardInfo.appendChild(prof)
+
+let followers = document.createElement('p')
+followers.textContent = `Followers: ${person.followers}`
+cardInfo.appendChild(followers)
+
+let following = document.createElement('p')
+following.textContent = `Following: ${person.following}`
+cardInfo.appendChild(following)
+
+let bio = document.createElement('p')
+bio.textContent = `Bio: ${person.bio}`
+cardInfo.appendChild(bio)
+console.log('spaget')
+return card;
+}
 
 /* List of LS Instructors Github username's: 
   tetondan
