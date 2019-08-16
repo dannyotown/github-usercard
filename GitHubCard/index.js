@@ -110,7 +110,6 @@ cardInfo.appendChild(following)
 let bio = document.createElement('p')
 bio.textContent = `Bio: ${person.bio}`
 cardInfo.appendChild(bio)
-console.log('spaget')
 return card;
 }
 
